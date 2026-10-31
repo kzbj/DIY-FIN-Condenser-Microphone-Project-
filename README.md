@@ -1,67 +1,122 @@
-# DIY FIN Condenser Microphone Project 🎙️
+# DIY FIN Condenser Microphone
 
-An open-source repository for building a compact studio condenser microphone based on the **FIN circuit** (an ultra-low-noise, transformerless microphone topology).
+A DIY studio condenser microphone based on the **FIN circuit**: a transformerless, phantom-powered (48V) design with a JFET input stage and an XLR output.
 
-This repository contains the Bill of Materials (BOM), component sourcing guides (with local Prague options), and build progress notes.
-
----
-
-## 🚀 Project Status & Roadmap
-
-> **Current Status:** In Progress 🛠️
-
-This project is currently in its early stages and will be updated step-by-step as I progress. 
-
-Since not all components are readily available off-the-shelf in local electronic stores (e.g., 3GΩ resistors, specific JFETs, and inductors), I will be finding workarounds, testing component substitutes, and documenting all sourcing solutions along the way.
+This repository contains my KiCad schematic and PCB, the Bill of Materials (BOM), sourcing notes (including local options in Prague), and build progress notes.
 
 ---
 
-## 📖 Project Background & Story
+## Project Status
 
-I stumbled upon a YouTube Short by **[Alexey Kostrykin](https://www.youtube.com/@AlexeyKostrykin/shorts)** titled *["Микрофон по схеме FIN"](https://www.youtube.com/shorts/0v5QWER9Aq8)*. I was really impressed by the audio quality demonstrated in the video (which was voiced using the microphone itself!) and decided to build one for myself.
+**Current status:** in progress
 
-The author kindly provided a public **[Google Drive Folder](https://drive.google.com/drive/folders/1b-6JGVSPCHNgb5s343AQEgBrW2yjJV4H?usp=drive_link)** containing schematic diagrams, PCB layouts, test audio files, and assembly guides. This repository tracks my journey of sourcing parts, substituting legacy components, and assembling the microphone.
+- [x] Schematic redrawn in KiCad
+- [x] BOM compiled
+- [x] PCB laid out in KiCad (DRC clean)
+- [ ] Verify open questions against the original schematic (see below)
+- [ ] Order PCB
+- [ ] Buy a replacement capsule
+- [ ] Source special components (3GΩ resistors, JFET, inductors)
+- [ ] Assemble and test
+- [ ] Design an enclosure
+
+Not all components are available off the shelf in local stores (e.g. 3GΩ resistors, the JFET, the inductors), so I document substitutes and sourcing workarounds as I go.
 
 ---
 
-## 🛠️ Bill of Materials (BOM)
+## Background
+
+The project is based on a YouTube Short by **[Alexey Kostrykin](https://www.youtube.com/@AlexeyKostrykin/shorts)**, *["Микрофон по схеме FIN"](https://www.youtube.com/shorts/0v5QWER9Aq8)*, where the voiceover is recorded with the microphone itself.
+
+The author published a **[Google Drive folder](https://drive.google.com/drive/folders/1b-6JGVSPCHNgb5s343AQEgBrW2yjJV4H?usp=drive_link)** with schematics, PCB layouts, test recordings and assembly notes. This repository documents my own build: redrawing the circuit in KiCad, designing my own PCB, sourcing parts and substituting obsolete components.
+
+---
+
+## Schematic
+
+![Schematic](schematics/fin-microphone.svg)
+
+## PCB
+
+![PCB 3D view](photos/fin-microphone.png)
+
+| Top | Bare board | Bottom |
+|---|---|---|
+| ![Top](photos/fin-microphone-up.png) | ![Bare board](photos/fin-microphone-without-comp.png) | ![Bottom](photos/fin-microphone-back.png) |
+
+My own PCB design, made from scratch rather than copied from the original layout, because I use a different capsule. Designed in KiCad 10: round board, all components on one side, single-layer (F.Cu) routing.
+
+- **Capsule and XLR are wired, not board-mounted:** both connect to solder-wire pads on the board (capsule: 2 pads, XLR: 3 pads).
+- **Ground ring** around the board edge (net `Earth`).
+- **Two solder pads on the ring (J2, J3)** for shielded/braided wire connecting PCB ground to the metal body.
+- **Layout zones:**
+  - capsule and JFET gate node (MK1, R13, C9, R12, Q3, R10, R11), with short traces and no copper pour nearby because of the gigaohm impedance;
+  - amplifier / output stage (Q1, Q2, R6–R9, C7, C8, C10, D1);
+  - RF filter next to the XLR pads (R3, R4, R5, C3, C6, L1, L2).
+
+---
+
+## Bill of Materials (BOM)
 
 ### 1. Capsule
-* **Capsule:** 26mm Condenser Capsule *(Purchased via eBay)*
 
-### 2. Standard Components (Sourced via GM Electronic, Prague)
+The original 26mm capsule (ordered from China) never arrived after about three months, so I am switching to a **34mm capsule**.
+
+- **Planned:** K47-type, single backplate, 2 terminals (sold as "RK-47" / "K47 capsule"), about 20–30 EUR.
+- **Why K47 rather than K67:** K67-type capsules have a high-frequency lift that is meant to be corrected by the U67/U87 circuit. This circuit has no such correction, so a K67 would sound bright. A dual-diaphragm K67 still works if only the front diaphragm is connected.
+- **Status:** not purchased yet.
+
+### 2. Standard Components (GM Electronic, Prague)
+
 | # | Component | Value / Part | Qty | Notes |
 |---|---|---|---|---|
-| 1 | Resistor | 47Ω | 2x | Metal Film 0.6W 1% |
-| 2 | Resistor | 47kΩ | 2x | Metal Film 0.6W 1% |
-| 3 | Resistor | 2MΩ | 1x | Metal Film 0.6W 1% |
-| 4 | Resistor | 1MΩ | 1x | Metal Film 0.6W 1% |
-| 5 | Resistor | 6.8Ω (6R) | 1x | Metal Film 0.6W 1% |
-| 6 | Resistor | 12kΩ | 1x | Metal Film 0.6W 1% |
-| 7 | Resistor | 5.6kΩ | 1x | Metal Film 0.6W 1% |
-| 8 | Capacitor | 47µF | 2x | Electrolytic (25V–50V) |
-| 9 | Capacitor | 470µF | 1x | Electrolytic (25V–50V) |
-| 10 | Capacitor | 680pF | 2x | Film / High-quality Ceramic |
-| 11 | Capacitor | 1000pF (1nF) | 1x | Film / High-quality Ceramic |
-| 12 | Transistor | BC857B | 1x | PNP Transistor |
-| 13 | Transistor | BC847C | 1x | NPN Transistor |
-| 14 | Diode | LL4148 / 1N4148 | 1x | Signal Diode |
-| 15 | Connector | XLR Male 3-Pin | 1x | Panel Mount Connector |
+| 1 | Resistor | 47Ω | 2x | Metal film 0.6W 1%, THT |
+| 2 | Resistor | 47kΩ | 2x | Metal film 0.6W 1%, THT |
+| 3 | Resistor | 2MΩ | 1x | Metal film 0.6W 1%, THT |
+| 4 | Resistor | 1MΩ | 1x | Metal film 0.6W 1%, THT |
+| 5 | Resistor | 6R (see open questions) | 1x | Metal film 0.6W 1%, THT |
+| 6 | Resistor | 12kΩ | 1x | Metal film 0.6W 1%, THT |
+| 7 | Resistor | 5.6kΩ | 1x | Metal film 0.6W 1%, THT |
+| 8 | Capacitor | 47µF | 2x | Electrolytic, 25–50V |
+| 9 | Capacitor | 470µF | 1x | Electrolytic, 25–50V |
+| 10 | Capacitor | 680pF | 2x | Film / ceramic, 5mm pitch |
+| 11 | Capacitor | 1000pF (1nF) | 1x | Film / ceramic, 5mm pitch |
+| 12 | Transistor | BC857B | 1x | PNP, SOT-23 |
+| 13 | Transistor | BC847C | 1x | NPN, SOT-23 |
+| 14 | Diode | 1N4148 | 1x | DO-35 THT (PCB uses the THT footprint; LL4148 is the SMD equivalent) |
+| 15 | Connector | XLR male, 3-pin | 1x | Panel mount, wired to the PCB |
 
-### 3. Special & High-Gigohm Components (Sourced via Mouser / TME)
-* **High-Gigohm Resistors:** 3GΩ (3 Gigaohm) — 2x *(Capsule polarization circuit)*
-* **Inductor:** 0.7µH — 2x
-* **JFET Transistor:** MMBF5457 (SOT-23) + SOT-23 to DIP adapter board *(Direct replacement for the obsolete 2N5457 TO-92)*
+### 3. Special Components (Mouser / TME)
 
----
-
-## 🛒 Local Sourcing Notes (Prague, Czech Republic)
-* **GM Electronic (Křižíkova 147/77, Prague 8):** Local pick-up for standard passive components, XLR connector, and BC/LL transistors (~120–150 CZK total).
-* **Mouser / TME:** Online order for 3GΩ resistors, MMBF5457 JFET, and 0.7µH inductors.
+| Component | Value / Part | Qty | Notes |
+|---|---|---|---|
+| Resistor | 3GΩ | 2x | Capsule polarization and gate bias; rare value, alternatives: 3x 1GΩ in series or the nearest available value (exact value is not critical) |
+| Inductor | 0.7µH | 2x | SMD, RF filter |
+| JFET | MMBF5457 | 1x | SOT-23, soldered directly to the PCB; SMD replacement for the obsolete 2N5457 (TO-92) |
 
 ---
 
-## 📂 Repository Structure
-* `/schematics` — Original FIN schematics and PCB designs.
-* `/photos` — Build progress and final microphone photos.
-* `/docs` — Component datasheets and workaround guides.
+## Open Questions
+
+To verify against the original schematic before ordering the PCB:
+
+1. **R3 value:** it reads as 6R (6Ω) on my copy, but it may be 6.8kΩ. The original photo is ambiguous.
+2. **R3 / R4 connection** at XLR pin 2: pin 3 has no matching resistor next to its 680pF capacitor, so this needs checking.
+3. **D1 polarity:** in my KiCad schematic, the D1 anode is connected to the supply rail (C10 +). Check the direction against the original.
+
+---
+
+## Sourcing Notes (Prague, Czech Republic)
+
+- **GM Electronic** (Křižíkova 147/77, Prague 8): local pick-up for standard passives, the XLR connector, BC transistors and the diode.
+- **Mouser / TME:** online orders for the 3GΩ resistors, MMBF5457 and 0.7µH inductors.
+- **eBay / AliExpress:** capsule. After the first order was lost, I plan to order from high-rated sellers with tracking, possibly from two sellers in parallel.
+
+---
+
+## Repository Structure
+
+- `/kicad`: my KiCad project (schematic and PCB)
+- `/schematics`: schematic exported from KiCad (SVG/PDF); the original FIN files are in the author's Google Drive (link above)
+- `/photos`: build progress and photos of the finished microphone
+- `/docs`: datasheets and notes on workarounds
