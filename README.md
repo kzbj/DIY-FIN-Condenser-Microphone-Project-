@@ -16,7 +16,7 @@ This repository contains my schematic and PCB in two versions (KiCad and Altium 
 - [x] Schematic and PCB redrawn in Altium Designer — rev. 2 (DRC clean, 0 violations)
 - [ ] Verify open questions against the original schematic (see below)
 - [ ] Check custom footprints against real parts (1:1 printout)
-- [ ] Order PCB
+- [x] Order PCB: 5 boards from JLCPCB (Altium rev. 2, Ø54 mm), November 2026, 14.62 EUR
 - [ ] Buy a replacement capsule
 - [ ] Source special components (3GΩ resistors, JFET, inductors)
 - [ ] Assemble and test
@@ -76,7 +76,7 @@ Full-resolution PDF: [schematics/fin-microphone-altium.pdf](schematics/fin-micro
 
 ### Changes compared to the KiCad version
 
-- **Board area changed:** the round board outline was resized.
+- **Board area changed:** round board, Ø54 mm (the KiCad version is Ø56 mm).
 - **Components selected against real parts:** every part was checked against an actual manufacturer part number (see the table below), not a generic footprint.
 - **Ground pour inside the board:** a GND copper pour on the bottom layer, in addition to the ground ring around the edge.
 - **Via added** for the ground connection between layers.
@@ -144,6 +144,17 @@ The original 26mm capsule (ordered from China) never arrived after about three m
 | Resistor | 3GΩ | 2x | Capsule polarization and gate bias; rare value, alternatives: 3x 1GΩ in series or the nearest available value (exact value is not critical) |
 | Inductor | 0.7µH | 2x | SMD, RF filter |
 | JFET | MMBF5457 | 1x | SOT-23, soldered directly to the PCB; SMD replacement for the obsolete 2N5457 (TO-92) |
+
+---
+
+## Cost
+
+| Item | Source | Price |
+|---|---|---|
+| PCB, 5 pcs (Ø54 mm, Altium rev. 2) | JLCPCB | 14.62 EUR total (≈ 2.92 EUR per board) |
+| Standard components | GM Electronic | to be added |
+| Special components (3GΩ resistors, JFET, inductors) | Mouser / TME | to be added |
+| Capsule | eBay / AliExpress | to be added |
 
 ---
 
