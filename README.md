@@ -2,7 +2,7 @@
 
 A DIY studio condenser microphone based on the **FIN circuit**: a transformerless, phantom-powered (48V) design with a JFET input stage and an XLR output.
 
-This repository contains my KiCad schematic and PCB, the Bill of Materials (BOM), sourcing notes (including local options in Prague), and build progress notes.
+This repository contains my schematic and PCB in two versions (KiCad and Altium Designer), the Bill of Materials (BOM), sourcing notes (including local options in Prague), and build progress notes.
 
 ---
 
@@ -13,7 +13,9 @@ This repository contains my KiCad schematic and PCB, the Bill of Materials (BOM)
 - [x] Schematic redrawn in KiCad
 - [x] BOM compiled
 - [x] PCB laid out in KiCad (DRC clean)
+- [x] Schematic and PCB redrawn in Altium Designer — rev. 2 (DRC clean, 0 violations)
 - [ ] Verify open questions against the original schematic (see below)
+- [ ] Check custom footprints against real parts (1:1 printout)
 - [ ] Order PCB
 - [ ] Buy a replacement capsule
 - [ ] Source special components (3GΩ resistors, JFET, inductors)
@@ -28,7 +30,7 @@ Not all components are available off the shelf in local stores (e.g. 3GΩ resist
 
 The project is based on a YouTube Short by **[Alexey Kostrykin](https://www.youtube.com/@AlexeyKostrykin/shorts)**, *["Микрофон по схеме FIN"](https://www.youtube.com/shorts/0v5QWER9Aq8)*, where the voiceover is recorded with the microphone itself.
 
-The author published a **[Google Drive folder](https://drive.google.com/drive/folders/1b-6JGVSPCHNgb5s343AQEgBrW2yjJV4H?usp=drive_link)** with schematics, PCB layouts, test recordings and assembly notes. This repository documents my own build: redrawing the circuit in KiCad, designing my own PCB, sourcing parts and substituting obsolete components.
+The author published a **[Google Drive folder](https://drive.google.com/drive/folders/1b-6JGVSPCHNgb5s343AQEgBrW2yjJV4H?usp=drive_link)** with schematics, PCB layouts, test recordings and assembly notes. This repository documents my own build: redrawing the circuit in KiCad and Altium Designer, designing my own PCB, sourcing parts and substituting obsolete components.
 
 ---
 
@@ -53,6 +55,43 @@ My own PCB design, made from scratch rather than copied from the original layout
   - capsule and JFET gate node (MK1, R13, C9, R12, Q3, R10, R11), with short traces and no copper pour nearby because of the gigaohm impedance;
   - amplifier / output stage (Q1, Q2, R6–R9, C7, C8, C10, D1);
   - RF filter next to the XLR pads (R3, R4, R5, C3, C6, L1, L2).
+
+---
+
+## Altium Designer version (rev. 2)
+
+The `altium/` folder contains a second, revised version of the project, redrawn from scratch in **Altium Designer** (schematic and PCB). I made it to learn Altium and to correct and improve the KiCad design. Designators are the same as in the KiCad version.
+
+### Changes compared to the KiCad version
+
+- **Board area changed:** the round board outline was resized.
+- **Components selected against real parts:** every part was checked against an actual manufacturer part number (see the table below), not a generic footprint.
+- **Ground pour inside the board:** a GND copper pour on the bottom layer, in addition to the ground ring around the edge.
+- **Via added** for the ground connection between layers.
+- **No copper around the gigaohm node:** the pour is cut out around the capsule and JFET gate area (J1, R12, R13, C9, Q3 gate) to avoid leakage and noise.
+- **Custom symbols and footprints:** several parts had no ready-made models, so I drew my own:
+  - 3GΩ resistor (radial SM102 body);
+  - capsule (2 wire pads), XLR (3 wire pads), braid/ground (1 pad).
+- **Component models from SnapMagic:** symbols and footprints for the transistors, JFET, inductors and capacitors were found on SnapMagic and imported into Altium.
+
+### Parts used in the Altium version
+
+| Ref | Part | Notes |
+|---|---|---|
+| Q3 | MMBF5457 | JFET, SOT-23 |
+| Q1 | BC857B | PNP, SOT-23 |
+| Q2 | BC847C | NPN, SOT-23 |
+| L1, L2 | BRL3225T1R0M | 1.0µH, 1210 SMD |
+| C3, C6 | FG28C0G2A681JNT00 | 680pF C0G, 100V, 5mm pitch |
+| R12, R13 | 3GΩ, SM102-type body | custom footprint |
+
+### Files
+
+- `altium/fin-microphone.PrjPcb`: project
+- `altium/fin-microphone.SchDoc`: schematic
+- `altium/fin-microphone.PcbDoc`: PCB
+- `altium/fin-microphone.SchLib`, `altium/fin-microphone.PcbLib`: custom symbols and footprints
+- `altium/libs/`: imported component libraries
 
 ---
 
@@ -102,14 +141,14 @@ To verify against the original schematic before ordering the PCB:
 
 1. **R3 value:** it reads as 6R (6Ω) on my copy, but it may be 6.8kΩ. The original photo is ambiguous.
 2. **R3 / R4 connection** at XLR pin 2: pin 3 has no matching resistor next to its 680pF capacitor, so this needs checking.
-3. **D1 polarity:** in my KiCad schematic, the D1 anode is connected to the supply rail (C10 +). Check the direction against the original.
+3. **D1 polarity:** in my schematic, the D1 anode is connected to the supply rail (C10 +). Check the direction against the original.
 
 ---
 
 ## Sourcing Notes (Prague, Czech Republic)
 
 - **GM Electronic** (Křižíkova 147/77, Prague 8): local pick-up for standard passives, the XLR connector, BC transistors and the diode.
-- **Mouser / TME:** online orders for the 3GΩ resistors, MMBF5457 and 0.7µH inductors.
+- **Mouser / TME:** online orders for the 3GΩ resistors, MMBF5457 and inductors.
 - **eBay / AliExpress:** capsule. After the first order was lost, I plan to order from high-rated sellers with tracking, possibly from two sellers in parallel.
 
 ---
@@ -117,6 +156,7 @@ To verify against the original schematic before ordering the PCB:
 ## Repository Structure
 
 - `/kicad`: my KiCad project (schematic and PCB)
+- `/altium`: my Altium Designer project, rev. 2 (schematic, PCB, custom libraries)
 - `/schematics`: schematic exported from KiCad (SVG/PDF); the original FIN files are in the author's Google Drive (link above)
 - `/photos`: build progress and photos of the finished microphone
 - `/docs`: datasheets and notes on workarounds
