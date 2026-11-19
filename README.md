@@ -62,6 +62,18 @@ My own PCB design, made from scratch rather than copied from the original layout
 
 The `altium/` folder contains a second, revised version of the project, redrawn from scratch in **Altium Designer** (schematic and PCB). I made it to learn Altium and to correct and improve the KiCad design. Designators are the same as in the KiCad version.
 
+### Schematic (Altium)
+
+![Altium schematic](photos/altium-schematic.png)
+
+Full-resolution PDF: [schematics/fin-microphone-altium.pdf](schematics/fin-microphone-altium.pdf)
+
+### PCB (Altium)
+
+| 2D layout | 3D top | 3D bottom (GND pour) |
+|---|---|---|
+| ![Altium PCB 2D](photos/altium-pcb-2d.png) | ![Altium PCB 3D top](photos/altium-pcb-3d.png) | ![Altium PCB 3D bottom](photos/altium-pcb-3d-bottom.png) |
+
 ### Changes compared to the KiCad version
 
 - **Board area changed:** the round board outline was resized.
